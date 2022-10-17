@@ -93,8 +93,8 @@ def trainingProcedure(FLAGS):
         for loader in gta5_loader_list:
             gta5_iter_list.append(iter(loader))
 
-        assert(len(gta5_iter_list) == 8)
-        assert(len(gta5_loader_list) == 8)
+        assert(len(gta5_iter_list) == 7)
+        assert(len(gta5_loader_list) == 7)
         print('using ', len(gta5_iter_list), ' total variants of GTA5')
 
     if 'synthia' in FLAGS.dataset:
@@ -108,8 +108,8 @@ def trainingProcedure(FLAGS):
         for loader in synthia_loader_list:
             synthia_iter_list.append(iter(loader))
 
-        assert(len(synthia_iter_list) == 8)
-        assert(len(synthia_loader_list) == 8)
+        assert(len(synthia_iter_list) == 7)
+        assert(len(synthia_loader_list) == 7)
         print('using ', len(synthia_iter_list), ' total variants of SYNTHIA')
 
     if 'synscapes' in FLAGS.dataset:
@@ -123,8 +123,8 @@ def trainingProcedure(FLAGS):
         for loader in synscapes_loader_list:
             synscapes_iter_list.append(iter(loader))
 
-        assert(len(synscapes_iter_list) == 8)
-        assert(len(synscapes_loader_list) == 8)
+        assert(len(synscapes_iter_list) == 7)
+        assert(len(synscapes_loader_list) == 7)
         print('using ', len(synscapes_iter_list), ' total variants of Synscapes')
 
     if not os.path.exists('./checkpoints'):
@@ -166,7 +166,6 @@ def trainingProcedure(FLAGS):
         index = iteration
 
         if index % len(FLAGS.dataset) == 0:
-            print('Index number: ', index)
             k = random.randint(0, len(list_to_loader[FLAGS.dataset[0]]) - 1)
             try:
                 src_lbl, src_img, src_img_blur = list_to_iter[FLAGS.dataset[0]][k].next()
@@ -174,7 +173,6 @@ def trainingProcedure(FLAGS):
                 gta5_iter_list[k] = iter(list_to_loader[FLAGS.dataset[0]][k])
                 src_lbl, src_img, src_img_blur = list_to_iter[FLAGS.dataset[0]][k].next()
         elif index % len(FLAGS.dataset) == 1:
-            print('Index number: ', index)
             k = random.randint(0, len(list_to_loader[FLAGS.dataset[1]]) - 1)
             try:
                 src_lbl, src_img, src_img_blur = list_to_iter[FLAGS.dataset[1]][k].next()
@@ -182,7 +180,6 @@ def trainingProcedure(FLAGS):
                 synscapes_iter_list[k] = iter(list_to_loader[FLAGS.dataset[1]][k])
                 src_lbl, src_img, src_img_blur = list_to_iter[FLAGS.dataset[1]][k].next()
         else:
-            print('Index number: ', index)
             k = random.randint(0, len(list_to_loader[FLAGS.dataset[2]]) - 1)
             try:
                 src_lbl, src_img, src_img_blur = list_to_iter[FLAGS.dataset[2]][k].next()
@@ -234,19 +231,7 @@ def trainingProcedure(FLAGS):
             mean_IoU, clean_mIoU = validate_edges(index, cityvalloader, gta_model, edge_model, device, 'meansub', writer, IMG_MEAN, i_lambda=FLAGS.mixup_lambda, dataset_split='cityscapes_val')
             writer.add_scalar("validation/citysc_val_mIoU_mixup", mean_IoU, index)
             writer.add_scalar("validation/citysc_val_mIoU", clean_mIoU, index)
-
-            if(mean_IoU > max_mean_IoU):
-                max_mean_IoU = mean_IoU
-                print("Saving best (max mean_IoU) model checkpoint")
-                torch.save(gta_model.state_dict(), os.path.join('./checkpoints', FLAGS.save_current_model))
-            else:
-                print('not saving since current miou is ', mean_IoU, 'while best is ', max_mean_IoU)
-
-        if (index % (add_img_th * 2) == 0):
-            print('saving for backup')
-            torch.save(gta_model.state_dict(), os.path.join('./checkpoints', FLAGS.save_current_model[:-4] + '_backup.pth'))
-            print('done saving')
+            torch.save(gta_model.state_dict(), os.path.join('./checkpoints', FLAGS.save_current_model[:-4] + '_' + str(index) + '.pth'))
 
         # adding scalars
         writer.add_scalar('loss/ce_loss', loss.item(), index)
-        writer.add_scalar('metrics/train_miou', score['Mean IoU'], index)
