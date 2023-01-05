@@ -1,6 +1,6 @@
 ## Vendor-side (source-only) training
 
-1. Download model weights from "coming soon (still figuring out how to upload in a convenient way)" and copy it to `checkpoints`. 
+1. Download model weights from [Google Drive](https://drive.google.com/drive/folders/1IgDmX4jtKV9SP3SEqpVhxP4Rhbx33q7c?usp=sharing) and copy it to `checkpoints`. 
 2. Set training arguments in ``script.sh`` file. Some important arguments are mentioned below:
     - `CUDA_VISIBLE_DEVICES`: GPU ID to be used for training.
     - `--dataset`: specify `gta5` or `synthia` or `gta5 synthia` (multi-source case with GTA5+SYNTHIA) or any combination of `gta5`, `synthia` and `synscapes` for vendor-side (single-source or multi-source) training.
