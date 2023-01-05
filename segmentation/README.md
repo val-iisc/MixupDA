@@ -29,8 +29,8 @@ ln -s /path/to/synscapes ./datasets/synscapes
 
 ### Pretrained weights
 Pretrained weights can be downloaded and copied to the `checkpoints` folder in either `vendorside` or `clientside` (coming soon) folder as required.
-- Weights from this paper's results - coming soon
-- Weights from ICCV21 baseline - [Google Drive](https://drive.google.com/drive/folders/1tq_TO_KOGxwLr9ea0jXQMCUv8I_Z7TZy?usp=sharing) 
+- Weights from this paper's results - [Google Drive](https://drive.google.com/drive/folders/1Q3fvDPagFIPT0jXBRX-5hW5pNTW_uChq?usp=sharing)
+- Weights from ICCV21 baseline - [Google Drive](https://drive.google.com/drive/folders/1MYZq6DPK6xemSM1yBz3UkwRvBW9rot5q?usp=share_link) 
 
 ## Evaluation
 - Use `bash eval.sh` within `vendorside` folder to evaluate any saved model weights.
