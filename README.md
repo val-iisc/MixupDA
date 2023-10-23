@@ -4,6 +4,10 @@ Code for our ICML 2022 paper 'Balancing Discriminability and Transferability for
 
 [[Paper]](https://proceedings.mlr.press/v162/kundu22a.html) [[Project Page]](https://sites.google.com/view/mixup-sfda)
 
+### Extra results
+
+* [CosDA](https://github.com/FengHZ/CoSDA) provides results on Continual Source-Free DA with our proposed edge-mixup. Many thanks to them.
+
 ## Citation
 If you find our work useful in your research, please cite the following paper:
 ```
